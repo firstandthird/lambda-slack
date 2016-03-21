@@ -1,0 +1,4 @@
+name: 'cwlogs'
+mainFile: 'index.js'
+conf:
+  Runtime: 'nodejs'
