@@ -1,6 +1,6 @@
 
 const async = require('async');
-const slack = require('./lib/slack');
+const slack = require('../../lib/slack');
 const zlib = require('zlib');
 
 module.exports.handler = (event, context) => {
@@ -25,31 +25,31 @@ module.exports.handler = (event, context) => {
     let title = '';
     let message = '';
     let color = 'good';
+    let logType = 'notification';
+    let tagString = '';
 
     //JSON
-    title = `*${logInfo.logGroup}/${logInfo.logStream} notification*`;
     if (msgObj[0] === '{') {
       msgObj = JSON.parse(msgObj);
-      //check if hapi
-      if (msgObj.tags && msgObj.message) {
-        if (typeof msgObj.message === 'string') {
-          title = msgObj.message;
-        } else {
-          message = `\`\`\`${JSON.stringify(msgObj.message, null, '  ')}\`\`\``;
-        }
-        if (msgObj.tags) {
-          if (msgObj.tags.error) {
-            color = 'danger';
-          }
 
-          title += ` (${Object.keys(msgObj.tags).join(', ')})`;
+      message = `\`\`\`${JSON.stringify(msgObj, null, '  ')}\`\`\``;
+      //if log has a tags object (logr, hapi)
+      if (msgObj.tags) {
+        if (msgObj.tags.error) {
+          color = 'danger';
+          logType = 'error';
         }
-      } else {
-        message = `\`\`\`${JSON.stringify(msgObj, null, '  ')}\`\`\``;
+        tagString = `(${Object.keys(msgObj.tags).join(', ')})`;
       }
     } else { //STRING
       message = msgObj;
+      if (message.match(/[warn]|[error]|[emerg]/)) {
+        logType = 'error';
+        color = 'danger';
+      }
     }
+
+    title = `*${logInfo.logGroup}/${logInfo.logStream} ${logType}* ${tagString}`;
 
     const data = {
       title,
@@ -73,8 +73,12 @@ module.exports.handler = (event, context) => {
         context.done(err);
       });
     });
-  } else {
-    console.log(event);
-    context.done();
+  } else if (event.logs) {
+    //for testing
+    async.each(event.logs, (log, done) => {
+      processLogEntry(event, log, done);
+    }, (err) => {
+      context.done(err);
+    });
   }
 };

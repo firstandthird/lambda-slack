@@ -2,3 +2,4 @@ name: 'cwlogs'
 mainFile: 'index.js'
 conf:
   Runtime: 'nodejs'
+  handler: 'index.handler'

@@ -1,5 +1,51 @@
 {
-  "awslogs": {
-    "data": "H4sIAAAAAAAAAHWPwQqCQBCGX0Xm7EFtK+smZBEUgXoLCdMhFtKV3akI8d0bLYmibvPPN3wz00CJxmQnTO41whwWQRIctmEcB6sQbFC3CjW3XW8kxpOpP+OC22d1Wml1qZkQGtoMsScxaczKN3plG8zlaHIta5KqWsozoTYw3/djzwhpLwivWFGHGpAFe7DL68JlBUk+l7KSN7tCOEJ4M3/qOI49vMHj+zCKdlFqLaU2ZHV2a4Ct/an0/ivdX8oYc1UVX860fQDQiMdxRQEAAA=="
-  }
+  "logGroup": "log-group",
+  "logStream": "log-stream",
+  "logs": [
+    {
+      "id": 123,
+      "timestamp": "1440442987000",
+      "message": "Some string"
+    },
+    {
+      "id": 123,
+      "timestamp": "1440442987000",
+      "message": "[error] nginx error"
+    },
+    {
+      "id": 123,
+      "timestamp": "1440442987000",
+      "message": "[warn] nginx warning"
+    },
+    {
+      "id": 123,
+      "timestamp": "1440442987000",
+      "message": "[emerg] nginx emergency"
+    },
+    {
+      "id": 123,
+      "timestamp": "1440442987000",
+      "message": "Some string"
+    },
+    {
+      "id": 123,
+      "timestamp": "1440442987000",
+      "message": "{\"timestamp\":\"2016-03-21T21:06:18.333Z\",\"tags\":{\"tag\":true},\"message\":\"Some message here\"}"
+    },
+    {
+      "id": 123,
+      "timestamp": "1440442987000",
+      "message": "{\"timestamp\":\"2016-03-21T21:06:18.333Z\",\"tags\":{\"tag\":true},\"message\":{\"message\":\"some message here\",\"data\":\"123\"}}"
+    },
+    {
+      "id": 123,
+      "timestamp": "1440442987000",
+      "message": "{\"timestamp\":\"2016-03-21T21:06:18.333Z\",\"tags\":{\"error\":true},\"message\":{\"message\":\"some error message here\",\"data\":\"123\"}}"
+    },
+    {
+      "id": 123,
+      "timestamp": "1440442987000",
+      "message": "{\"message\":\"Some message here\"}"
+    }
+  ]
 }

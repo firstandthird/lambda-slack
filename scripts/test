@@ -1,0 +1,17 @@
+#!/bin/bash
+
+FN=$1
+BUNDLE=1
+if [[ "$2" == "0" ]]; then
+  BUNDLE=0
+fi
+
+if [[ "$BUNDLE" == 1 ]]; then
+  echo "Bundling $FN"
+  ./node_modules/.bin/lamploy bundle \
+    --env-file cwlogs.test.env \
+    functions/$FN
+fi
+cp functions/$FN/test.json .temp/$FN.min
+
+docker run --rm -v "$(pwd)/.temp/$FN.min:/lambda/function" firstandthird/docker-lambda
