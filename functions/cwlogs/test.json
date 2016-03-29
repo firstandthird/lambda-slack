@@ -35,7 +35,7 @@
     {
       "id": 123,
       "timestamp": "1440442987000",
-      "message": "{\"timestamp\":\"2016-03-21T21:06:18.333Z\",\"tags\":{\"tag\":true},\"message\":{\"message\":\"some message here\",\"data\":\"123\"}}"
+      "message": "{\"timestamp\":\"2016-03-21T21:06:18.333Z\",\"tags\":{\"notice\":true},\"message\":{\"message\":\"some message here\",\"data\":\"123\"}}"
     },
     {
       "id": 123,

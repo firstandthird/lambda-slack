@@ -27,14 +27,28 @@ module.exports.handler = (event, context) => {
     let color = 'good';
     let logType = 'notification';
     let tagString = '';
+    let pretext = '';
 
     //JSON
     if (msgObj[0] === '{') {
       msgObj = JSON.parse(msgObj);
 
       message = `\`\`\`${JSON.stringify(msgObj, null, '  ')}\`\`\``;
+      if (typeof msgObj.message === 'string') {
+        pretext = msgObj.message;
+      }
+      if (typeof msgObj.message === 'object' && typeof msgObj.message.message === 'string') {
+        pretext = msgObj.message.message;
+      }
       //if log has a tags object (logr, hapi)
       if (msgObj.tags) {
+        if (msgObj.tags.notice) {
+          color = '#336699';
+        }
+        if (msgObj.tags.warning) {
+          color = 'warning';
+          logType = 'warning';
+        }
         if (msgObj.tags.error) {
           color = 'danger';
           logType = 'error';
@@ -56,6 +70,9 @@ module.exports.handler = (event, context) => {
       message,
       color
     };
+    if (pretext) {
+      data.pretext = pretext;
+    }
     sendToSlack(data, done);
   };
 
